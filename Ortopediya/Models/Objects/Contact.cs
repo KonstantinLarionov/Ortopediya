@@ -1,0 +1,22 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Ortopediya.Models.Objects
+{
+    public class Contact
+    {
+        public int Id { get; set; }
+        public string EmailInfo { get; set; }
+        public string EmailMarketing { get; set; }
+        public string PhoneInfo { get; set; }
+        public string PhoneMarketing { get; set; }
+        public string MapStringScript { get; set; }
+        public string VKLink { get; set; }
+        public string OKLink { get; set; }
+        public string FacebookLink { get; set; }
+        public string InstagramLink { get; set; }
+        public DateTime LastDateEdit { get; set; }
+    }
+}

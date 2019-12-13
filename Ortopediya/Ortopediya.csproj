@@ -4,4 +4,9 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\Entitys\" />
+    <Folder Include="Models\PageObjects\" />
+  </ItemGroup>
+
 </Project>
