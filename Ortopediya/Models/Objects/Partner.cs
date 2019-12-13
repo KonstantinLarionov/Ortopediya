@@ -11,5 +11,6 @@ namespace Ortopediya.Models.Objects
         public string Code { get; set; }
         public string Login { get; set; }
         public string Password { get; set; }
+        
     }
 }
