@@ -30,7 +30,7 @@ namespace Ortopediya.Models.Entitys
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseMySql("Server=localhost;Database=BUData;User=root;Password=Thehorde;");
+            optionsBuilder.UseMySql("Server=localhost;Database=BUData;User=root;Password=4Thehorde!;");
             base.OnConfiguring(optionsBuilder);
         }
     }

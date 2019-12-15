@@ -22,10 +22,7 @@ namespace Ortopediya
         {
             Configuration = configuration;
         }
-
         public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
@@ -33,23 +30,20 @@ namespace Ortopediya
             services.AddSingleton<IFileProvider>(new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")));
             services.AddSession(options =>
             {
-                // Set a short timeout for easy testing.
                 options.IdleTimeout = TimeSpan.FromSeconds(100000);
                 options.Cookie.HttpOnly = true;
-                // Make the session cookie essential
                 options.Cookie.IsEssential = true;
             });
             services.AddMvc();
-            services.AddDbContextPool<FrontContext>( // replace "YourDbContext" with the class name of your DbContext
-               options => options.UseMySql("Server=localhost;Database=BUData;User=root;Password=Thehorde;", // replace with your Connection String
+            services.AddDbContextPool<FrontContext>( 
+               options => options.UseMySql("Server=localhost;Database=BUData;User=root;Password=4Thehorde!;", 
                    mySqlOptions =>
                    {
-                       mySqlOptions.ServerVersion(new Version(5, 6, 45), ServerType.MySql); // replace with your Server Version and Type
+                       mySqlOptions.ServerVersion(new Version(5, 6, 45), ServerType.MySql); 
                    }
            ));
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -59,7 +53,6 @@ namespace Ortopediya
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
             app.UseHttpsRedirection();

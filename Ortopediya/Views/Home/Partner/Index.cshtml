@@ -1,0 +1,40 @@
+﻿<html>
+<head>
+    <link href="~/styles/partner.css" type="text/css" rel="stylesheet" />
+</head>
+<body>
+    <section id="money">
+        <div class="card">
+            <h2>Вывод средств партнера</h2>
+            <label>Введите в поле ниже ваш код партнера:</label>
+            <input type="text" />
+            <label>Введите в поле ниже ваш пароль:</label>
+            <input type="text" />
+            <label>Введите в поле ниже вашу карту:</label>
+            <input type="text" />
+            <button>Запросить вывод</button>
+        </div>
+    </section>
+    <section id="balance">
+        <div class="card">
+            <h2>Просмотр баланса партнера</h2>
+            <label>Введите в поле ниже ваш код партнера:</label>
+            <input type="text" />
+            <div>
+                <label style="margin-right: 5%;">Ваш баланс:</label>
+                <input readonly type="text" style="width: 60%; height: 10%;" />
+            </div>
+            <button>Посмотреть баланс</button>
+            <button onclick="takeMoney();">Запросить вывод</button>
+            <button>Назад на сайт</button>
+
+        </div>
+    </section>
+
+    <script type="text/javascript">
+        function takeMoney() {
+            document.getElementById("balance").style.transform = "translate(100%,100%)";
+        }
+    </script>
+</body>
+</html>
