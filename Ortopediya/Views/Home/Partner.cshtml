@@ -1,0 +1,46 @@
+﻿@model Ortopediya.Models.PageObjects.PartnerModel
+@section Partner{
+    <link href="~/styles/partner.css" type="text/css" rel="stylesheet" />
+}
+@section Index{
+    <link rel="stylesheet" type="text/css" href="~/styles/main_styles.css">
+    <link rel="stylesheet" type="text/css" href="~/styles/responsive.css">
+}
+<div class="contact" style="margin-bottom: 10%;">
+    <div class="sectionD" id="balance">
+        <div class="card">
+            <h3>Просмотр баланса партнера</h3>
+            <label>Введите в поле ниже ваш код партнера:</label>
+            <input type="text" id="code" />
+            <div style=" height: 10%; display: flex; flex-direction: row; align-items: center; align-content: center; justify-content: center;">
+                <label style="margin-right: 5%;">Ваш баланс:</label>
+                <input type="text" id="balanceV" style="width: 60%; height: 60%;"/>
+            </div>
+            <button onclick="takeBalance();">Посмотреть баланс</button>
+            <button onclick="takeMoney();">Запросить вывод</button>
+        </div>
+    </div>
+    <div id="money" class="sectionD">
+            <form action="/Home/OutOfMoneyPartners" method="post" class="card">
+                <h2>Вывод средств партнера</h2>
+                <label>Введите в поле ниже ваш код партнера:</label>
+                <input type="text" name="code" />
+                <label>Введите в поле ниже ваш пароль:</label>
+                <input type="text" name="password" />
+                <label>Введите в поле ниже вашу карту:</label>
+                <input type="text" name="card" />
+                <button>Запросить вывод</button>
+            </form>
+    </div>
+
+</div>
+<script type="text/javascript">
+    function takeBalance() {
+        $.getJSON("/Home/BalancePartner?code="+$("#code").val(), null, function (data) {
+            $("#balanceV").val(data);
+        });
+    }
+    function takeMoney() {
+        document.getElementById("balance").style.display = "none";
+    }
+</script>

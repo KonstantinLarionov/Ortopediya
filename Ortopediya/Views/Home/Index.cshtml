@@ -1,4 +1,9 @@
-﻿<!-- Home -->
+﻿@model Ortopediya.Models.PageObjects.IndexModel
+<!-- Home -->
+@section Index{
+    <link rel="stylesheet" type="text/css" href="~/styles/main_styles.css">
+    <link rel="stylesheet" type="text/css" href="~/styles/responsive.css">
+}
 <div class="wrapper-slider" id="main2">
     <div class="item-door" id="right"></div>
     <div class="item-door" id="left"></div>
@@ -13,59 +18,48 @@
         <div class="owl-carousel owl-theme home_slider">
 
             <!-- Slider Item -->
-            <div class="owl-item home_slider_item">
-                <div class="home_slider_background" style="background-image:url(images/girl-cyber.jpg)"></div>
-                <div class="home_slider_content_container">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col">
-                                <div class="home_slider_content" data-animation-in="fadeIn" data-animation-out="animate-out fadeOut">
-                                    <div class="home_slider_title">Приветствуем вас в наше магазине.</div>
-                                    <div class="home_slider_subtitle">В нашем магазине в найдете все самые нужные товары, для комфортного выздоровления так как мы сотрудничаем с врачами и абсолютно точно знаем что вам нужно.</div>
-                                    <div class="button button_light home_button"><a href="#">Посмотреть товары</a></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @for (int i = 0; i < Model.Baners.Count; i++)
+            {
+                if (i == 0)
+                {
 
-            <!-- Slider Item -->
-            @*<div class="owl-item home_slider_item">
-                    <div class="home_slider_background" style="background-image:url(images/home_slider_1.jpg)"></div>
-                    <div class="home_slider_content_container">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col">
-                                    <div class="home_slider_content" data-animation-in="fadeIn" data-animation-out="animate-out fadeOut">
-                                        <div class="home_slider_title">A new Online Shop experience.</div>
-                                        <div class="home_slider_subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam a ultricies metus. Sed nec molestie eros. Sed viverra velit venenatis fermentum luctus.</div>
-                                        <div class="button button_light home_button"><a href="#">Shop Now</a></div>
+                    <div class="owl-item home_slider_item">
+                        <div class="home_slider_background" style="background-image:url(/images/@Model.Baners[i].URL)"></div>
+                        <div class="home_slider_content_container">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="home_slider_content" data-animation-in="fadeIn" data-animation-out="animate-out fadeOut">
+                                            <div class="home_slider_title">Приветствуем вас в наше магазине.</div>
+                                            <div class="home_slider_subtitle">В нашем магазине в найдете все самые нужные товары, для комфортного выздоровления так как мы сотрудничаем с врачами и абсолютно точно знаем что вам нужно.</div>
+                                            <div class="button button_light home_button"><a href="#">Посмотреть товары</a></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>*@
-
-            <!-- Slider Item -->
-            @*<div class="owl-item home_slider_item">
-                    <div class="home_slider_background" style="background-image:url(images/home_slider_1.jpg)"></div>
-                    <div class="home_slider_content_container">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col">
-                                    <div class="home_slider_content" data-animation-in="fadeIn" data-animation-out="animate-out fadeOut">
-                                        <div class="home_slider_title">A new Online Shop experience.</div>
-                                        <div class="home_slider_subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam a ultricies metus. Sed nec molestie eros. Sed viverra velit venenatis fermentum luctus.</div>
-                                        <div class="button button_light home_button"><a href="#">Shop Now</a></div>
+                }
+                else
+                {
+                    <div class="owl-item home_slider_item">
+                        <div class="home_slider_background" style="background-image:url(/images/@Model.Baners[i].URL)"></div>
+                        @*<div class="home_slider_content_container">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="home_slider_content" data-animation-in="fadeIn" data-animation-out="animate-out fadeOut">
+                                            <div class="home_slider_title">Приветствуем вас в наше магазине.</div>
+                                            <div class="home_slider_subtitle">В нашем магазине в найдете все самые нужные товары, для комфортного выздоровления так как мы сотрудничаем с врачами и абсолютно точно знаем что вам нужно.</div>
+                                            <div class="button button_light home_button"><a href="#">Посмотреть товары</a></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>*@
                     </div>
-                </div>*@
-
+                }
+            }
         </div>
 
         <!-- Home Slider Dots -->
@@ -94,7 +88,7 @@
 <div class="avds">
     <div class="avds_container d-flex flex-lg-row flex-column align-items-start justify-content-between">
         <div class="avds_small">
-            <div class="avds_background" style="background-image:url(images/hand.jpg)"></div>
+            <div class="avds_background" style="background-image:url(/images/hand.jpg)"></div>
             <div class="avds_small_inner">
                 <div class="avds_large_content">
                     <div class="avds_title">Принимаем</div>
@@ -104,7 +98,7 @@
             </div>
         </div>
         <div class="avds_large">
-            <div class="avds_background" style="background-image:url(images/kreslo.jpg)"></div>
+            <div class="avds_background" style="background-image:url(/images/kreslo.jpg)"></div>
             <div class="avds_large_container">
                 <div class="avds_large_content">
                     <div class="avds_title">Продаем</div>
@@ -124,82 +118,83 @@
             <div class="col">
 
                 <div class="product_grid">
-
-                    <!-- Product -->
-                    <div class="product">
-                        <div class="product_image"><img src="images/product_1.jpg" alt=""></div>
-                        <div class="product_extra product_new"><a href="categories.html">New</a></div>
-                        <div class="product_content">
-                            <div class="product_title"><a href="product.html">Smart Phone</a></div>
-                            <div class="product_price">$670</div>
+                    @for (int i = 0; i < Model.Products.Count; i++)
+                    {
+                        <div class="product">
+                            <div class="product_image"><img src="@Model.Products[i].Image" alt=""></div>
+                            <div class="product_extra product_new"><a href="">New</a></div>
+                            <div class="product_content">
+                                <div class="product_title"><a href="product.html"> @Model.Products[i].Name</a></div>
+                                <div class="product_price">@Model.Products[i].Price</div>
+                            </div>
                         </div>
-                    </div>
-
+                    }
                     <!-- Product -->
-                    <div class="product">
-                        <div class="product_image"><img src="images/product_2.jpg" alt=""></div>
-                        <div class="product_extra product_sale"><a href="categories.html">Sale</a></div>
-                        <div class="product_content">
-                            <div class="product_title"><a href="product.html">Smart Phone</a></div>
-                            <div class="product_price">$670</div>
+                    @*<div class="product">
+                            <div class="product_image"><img src="/images/product_1.jpg" alt=""></div>
+                            <div class="product_extra product_new"><a href="categories.html">New</a></div>
+                            <div class="product_content">
+                                <div class="product_title"><a href="product.html">Smart Phone</a></div>
+                                <div class="product_price">$670</div>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- Product -->
-                    <div class="product">
-                        <div class="product_image"><img src="images/product_3.jpg" alt=""></div>
-                        <div class="product_content">
-                            <div class="product_title"><a href="product.html">Smart Phone</a></div>
-                            <div class="product_price">$670</div>
+                        <div class="product">
+                            <div class="product_image"><img src="/images/product_2.jpg" alt=""></div>
+                            <div class="product_extra product_sale"><a href="categories.html">Sale</a></div>
+                            <div class="product_content">
+                                <div class="product_title"><a href="product.html">Smart Phone</a></div>
+                                <div class="product_price">$670</div>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- Product -->
-                    <div class="product">
-                        <div class="product_image"><img src="images/product_4.jpg" alt=""></div>
-                        <div class="product_content">
-                            <div class="product_title"><a href="product.html">Smart Phone</a></div>
-                            <div class="product_price">$670</div>
+                        <div class="product">
+                            <div class="product_image"><img src="/images/product_3.jpg" alt=""></div>
+                            <div class="product_content">
+                                <div class="product_title"><a href="product.html">Smart Phone</a></div>
+                                <div class="product_price">$670</div>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- Product -->
-                    <div class="product">
-                        <div class="product_image"><img src="images/product_5.jpg" alt=""></div>
-                        <div class="product_content">
-                            <div class="product_title"><a href="product.html">Smart Phone</a></div>
-                            <div class="product_price">$670</div>
+                        <div class="product">
+                            <div class="product_image"><img src="/images/product_4.jpg" alt=""></div>
+                            <div class="product_content">
+                                <div class="product_title"><a href="product.html">Smart Phone</a></div>
+                                <div class="product_price">$670</div>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- Product -->
-                    <div class="product">
-                        <div class="product_image"><img src="images/product_6.jpg" alt=""></div>
-                        <div class="product_extra product_hot"><a href="categories.html">Hot</a></div>
-                        <div class="product_content">
-                            <div class="product_title"><a href="product.html">Smart Phone</a></div>
-                            <div class="product_price">$670</div>
+                        <div class="product">
+                            <div class="product_image"><img src="/images/product_5.jpg" alt=""></div>
+                            <div class="product_content">
+                                <div class="product_title"><a href="product.html">Smart Phone</a></div>
+                                <div class="product_price">$670</div>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- Product -->
-                    <div class="product">
-                        <div class="product_image"><img src="images/product_7.jpg" alt=""></div>
-                        <div class="product_content">
-                            <div class="product_title"><a href="product.html">Smart Phone</a></div>
-                            <div class="product_price">$670</div>
+                        <div class="product">
+                            <div class="product_image"><img src="/images/product_6.jpg" alt=""></div>
+                            <div class="product_extra product_hot"><a href="categories.html">Hot</a></div>
+                            <div class="product_content">
+                                <div class="product_title"><a href="product.html">Smart Phone</a></div>
+                                <div class="product_price">$670</div>
+                            </div>
                         </div>
-                    </div>
-
-                    <!-- Product -->
-                    <div class="product">
-                        <div class="product_image"><img src="images/product_8.jpg" alt=""></div>
-                        <div class="product_extra product_sale"><a href="categories.html">Hot</a></div>
-                        <div class="product_content">
-                            <div class="product_title"><a href="product.html">Smart Phone</a></div>
-                            <div class="product_price">$670</div>
+                        <div class="product">
+                            <div class="product_image"><img src="/images/product_7.jpg" alt=""></div>
+                            <div class="product_content">
+                                <div class="product_title"><a href="product.html">Smart Phone</a></div>
+                                <div class="product_price">$670</div>
+                            </div>
                         </div>
-                    </div>
+                        <div class="product">
+                            <div class="product_image"><img src="/images/product_8.jpg" alt=""></div>
+                            <div class="product_extra product_sale"><a href="categories.html">Hot</a></div>
+                            <div class="product_content">
+                                <div class="product_title"><a href="product.html">Smart Phone</a></div>
+                                <div class="product_price">$670</div>
+                            </div>
+                        </div>*@
 
                 </div>
 
@@ -215,7 +210,7 @@
         <div class="row">
             <div class="col">
                 <div class="avds_xl_container clearfix">
-                    <div class="avds_xl_background" style="background-image:url(images/kolyaska.jpg)"></div>
+                    <div class="avds_xl_background" style="background-image:url(/images/kolyaska.jpg)"></div>
                     <div class="avds_xl_content">
                         <div class="avds_title">Лучшие условия</div>
                         <div class="avds_text">Наши цены и условия аренды, это то что заставит вас по необходимости зайти и сотрудничать с нами.</div>
@@ -236,7 +231,7 @@
             <!-- Icon Box -->
             <div class="col-lg-4 icon_box_col">
                 <div class="icon_box">
-                    <div class="icon_box_image"><img src="images/icon_1.svg" alt=""></div>
+                    <div class="icon_box_image"><img src="/images/icon_1.svg" alt=""></div>
                     <div class="icon_box_title">Доставка</div>
                     <div class="icon_box_text">
                         <p>Вы можете оформить доставку товара на ваш адрес проживания, и мы доставим вам товар в кратчайшие сроки.</p>
@@ -247,7 +242,7 @@
             <!-- Icon Box -->
             <div class="col-lg-4 icon_box_col">
                 <div class="icon_box">
-                    <div class="icon_box_image"><img src="images/icon_2.svg" alt=""></div>
+                    <div class="icon_box_image"><img src="/images/icon_2.svg" alt=""></div>
                     <div class="icon_box_title">Качество</div>
                     <div class="icon_box_text">
                         <p>У нас только качественное медицинское оборудование, и многочисленные положительные отзывы</p>
@@ -258,7 +253,7 @@
             <!-- Icon Box -->
             <div class="col-lg-4 icon_box_col">
                 <div class="icon_box">
-                    <div class="icon_box_image"><img src="images/icon_3.svg" alt=""></div>
+                    <div class="icon_box_image"><img src="/images/icon_3.svg" alt=""></div>
                     <div class="icon_box_title">Рекомендации</div>
                     <div class="icon_box_text">
                         <p>Наши услуги и товары рекомендуют сами врачи, так же мы советуемся с ними подбираем качественный товар для вас</p>
@@ -285,8 +280,8 @@
                     <div class="newsletter_title">Подпишитесь на актуальную информацию</div>
                     <div class="newsletter_text"><p>Оставьте ваш контактный адрес и мы будем присылать вам информацию о новых поступлениях</p></div>
                     <div class="newsletter_form_container">
-                        <form action="#" id="newsletter_form" class="newsletter_form">
-                            <input type="email" class="newsletter_input" required="required">
+                        <form action="/Home/Subscribe" id="newsletter_form" method="post" class="newsletter_form">
+                            <input  name="email" type="email" class="newsletter_input" required="required">
                             <button class="newsletter_button trans_200"><span>Подписаться</span></button>
                         </form>
                     </div>

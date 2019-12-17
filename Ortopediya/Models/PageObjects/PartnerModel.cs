@@ -8,7 +8,9 @@ namespace Ortopediya.Models.PageObjects
 {
     public class PartnerModel
     {
+        public List<Category> Categories { get; set; }
+
         public Partner Partner { get; set; }
-        public Contact Contact { get; set; }
+        public Contact Contacts { get; set; }
     }
 }

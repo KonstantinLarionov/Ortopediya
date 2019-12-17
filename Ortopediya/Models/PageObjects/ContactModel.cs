@@ -8,6 +8,8 @@ namespace Ortopediya.Models.PageObjects
 {
     public class ContactModel
     {
+        public List<Category> Categories { get; set; }
+
         public Request Request { get; set; }
         public Contact Contacts { get; set; }
         public User User { get; set; }

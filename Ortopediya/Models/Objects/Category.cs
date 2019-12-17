@@ -10,6 +10,7 @@ namespace Ortopediya.Models.Objects
         public int Id { get; set; }
         public int CountProducts { get; set; }
         public string Name { get; set; }
+        public string Url { get; set; }
         public DateTime LastEdit { get; set; }
     }
 }

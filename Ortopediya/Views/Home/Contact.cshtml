@@ -1,6 +1,16 @@
-﻿
+﻿@model  Ortopediya.Models.PageObjects.ContactModel
 <!-- Contact -->
-
+@section Contact{
+    <link rel="stylesheet" type="text/css" href="~/styles/contact.css">
+    <link rel="stylesheet" type="text/css" href="~/styles/contact_responsive.css">
+}
+<div class="wrapper-slider" id="main2">
+    <div class="item-door" id="right"></div>
+    <div class="item-door" id="left"></div>
+    <div id="preloader">
+        <div id="loader"></div>
+    </div>
+</div>
 <div class="contact" style="margin-top: 10%;">
     <div class="container">
         <div class="row">
@@ -11,27 +21,27 @@
                     <div class="section_title">Свяжитесь с нами.</div>
                     <div class="section_subtitle">Задайте вопрос или оставьте отзыв/предложение нам, мы ответим вам в течении часа</div>
                     <div class="contact_form_container">
-                        <form action="#" id="contact_form" class="contact_form">
+                        <form action="/Home/Contact" id="contact_form" method="post" class="contact_form">
                             <div class="row">
                                 <div class="col-xl-6">
                                     <!-- Name -->
                                     <label for="contact_name">Ваше имя*</label>
-                                    <input type="text" id="contact_name" class="contact_input" required="required">
+                                    <input type="text" name="name" id="contact_name" class="contact_input" required="required">
                                 </div>
                                 <div class="col-xl-6 last_name_col">
                                     <!-- Last Name -->
                                     <label for="contact_last_name">Email/Телефон*</label>
-                                    <input type="text" id="contact_last_name" class="contact_input" required="required">
+                                    <input type="text" name="contact" id="contact_last_name" class="contact_input" required="required">
                                 </div>
                             </div>
                             <div>
                                 <!-- Subject -->
                                 <label for="contact_company">Тема обращения</label>
-                                <input type="text" id="contact_company" class="contact_input">
+                                <input type="text" name="theme" id="contact_company" class="contact_input">
                             </div>
                             <div>
                                 <label for="contact_textarea">Текст обращения*</label>
-                                <textarea id="contact_textarea" class="contact_input contact_textarea" required="required"></textarea>
+                                <textarea id="contact_textarea" name="text" class="contact_input contact_textarea" required="required"></textarea>
                             </div>
                             <button class="button contact_button"><span>Отправить</span></button>
                         </form>
@@ -45,22 +55,22 @@
                     <div class="contact_info_section">
                         <div class="contact_info_title">Отдел маркетинга</div>
                         <ul>
-                            <li>Phone: <span>8 (3532) 21-11-21</span></li>
-                            <li>Email: <span>badik56@mail.com</span></li>
+                            <li>Телефон: <span>@Model.Contacts.PhoneMarketing</span></li>
+                            <li>Email: <span>@Model.Contacts.EmailMarketing</span></li>
                         </ul>
                     </div>
                     @*<div class="contact_info_section">
-                        <div class="contact_info_title">Доставка/Товары</div>
-                        <ul>
-                            <li>Phone: <span>+53 345 7953 3245</span></li>
-                            <li>Email: <span>yourmail@gmail.com</span></li>
-                        </ul>
-                    </div>*@
+                            <div class="contact_info_title">Доставка/Товары</div>
+                            <ul>
+                                <li>Phone: <span>+53 345 7953 3245</span></li>
+                                <li>Email: <span>yourmail@gmail.com</span></li>
+                            </ul>
+                        </div>*@
                     <div class="contact_info_section">
                         <div class="contact_info_title">Информация</div>
                         <ul>
-                            <li>Phone: <span>8 (3532) 23-14-12</span></li>
-                            <li>Email: <span>badik56@mail.com</span></li>
+                            <li>Телефон: <span>@Model.Contacts.PhoneInfo</span></li>
+                            <li>Email: <span>@Model.Contacts.EmailInfo</span></li>
                         </ul>
                     </div>
                 </div>

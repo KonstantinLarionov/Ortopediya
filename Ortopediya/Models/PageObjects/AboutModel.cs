@@ -8,6 +8,7 @@ namespace Ortopediya.Models.PageObjects
 {
     public class AboutModel
     {
+        public List<Category> Categories { get; set; }
         public List<About> Abouts { get; set; }
         public Contact Contacts { get; set; }
     }

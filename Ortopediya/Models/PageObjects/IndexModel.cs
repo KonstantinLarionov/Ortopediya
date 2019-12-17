@@ -8,6 +8,8 @@ namespace Ortopediya.Models.PageObjects
 {
     public class IndexModel
     {
+        public List<Category> Categories { get; set; }
+
         public List<Product> Products { get; set; }
         public Contact Contacts { get; set; }
         public List<Baner> Baners { get; set; }

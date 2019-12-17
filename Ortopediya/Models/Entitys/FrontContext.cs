@@ -9,20 +9,20 @@ namespace Ortopediya.Models.Entitys
 {
     public class FrontContext : DbContext
     {
-        DbSet<About> Abouts { get; set; }
-        DbSet<Baner> Baners { get; set; }
-        DbSet<Category> Categories { get; set; }
-        DbSet<Click> Clicks { get; set; }
-        DbSet<Coming> Comings { get; set; }
-        DbSet<Contact> Contacts { get; set; }
-        DbSet<Expend> Expends { get; set; }
-        DbSet<Partner> Partners { get; set; }
-        DbSet<Product> Products { get; set; }
-        DbSet<Request> Requests { get; set; }
-        DbSet<Rule> Rule { get; set; }
-        DbSet<Rules> Rules { get; set; }
-        DbSet<User> Users { get; set; }
-        DbSet<IP> IPs { get; set; }
+        public DbSet<About> Abouts { get; set; }
+        public DbSet<Baner> Baners { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Click> Clicks { get; set; }
+        public DbSet<Coming> Comings { get; set; }
+        public DbSet<Contact> Contacts { get; set; }
+        public DbSet<Expend> Expends { get; set; }
+        public DbSet<Partner> Partners { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Request> Requests { get; set; }
+        public DbSet<Rule> Rule { get; set; }
+        public DbSet<Rules> Rules { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<IP> IPs { get; set; }
         public FrontContext(DbContextOptions options) : base(options)
         {
             Database.EnsureCreated();
@@ -30,7 +30,7 @@ namespace Ortopediya.Models.Entitys
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseMySql("Server=localhost;Database=BUData;User=root;Password=4Thehorde!;");
+            optionsBuilder.UseMySql("Server=localhost;Database=u0893839_BuDatabase;User=u0893_adminDB;Password=snRq40~6;");
             base.OnConfiguring(optionsBuilder);
         }
     }

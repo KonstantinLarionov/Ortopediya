@@ -8,7 +8,11 @@ namespace Ortopediya.Models.PageObjects
 {
     public class MarketModel
     {
+        public List<Category> Categories { get; set; }
+        public string SelectedCategory { get; set; }
         public List<Product> Products { get; set; }
         public User User { get; set; }
+        public Contact Contacts { get; set; }
+
     }
 }

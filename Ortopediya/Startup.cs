@@ -36,7 +36,7 @@ namespace Ortopediya
             });
             services.AddMvc();
             services.AddDbContextPool<FrontContext>( 
-               options => options.UseMySql("Server=localhost;Database=BUData;User=root;Password=4Thehorde!;", 
+               options => options.UseMySql("Server=localhost;Database=u0893839_BuDatabase;User=u0893_adminDB;Password=snRq40~6;", 
                    mySqlOptions =>
                    {
                        mySqlOptions.ServerVersion(new Version(5, 6, 45), ServerType.MySql); 
@@ -46,6 +46,7 @@ namespace Ortopediya
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseSession();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

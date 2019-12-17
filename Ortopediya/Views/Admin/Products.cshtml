@@ -1,0 +1,100 @@
+﻿@{ Layout = "_LayoutAdmin"; }
+@model Ortopediya.Models.PageObjects.MarketModel
+<section>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Таблица редактирования товаров на <a href="https://badik56.ru">Badik56</a></h4>
+                    <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+                    <div class="heading-elements">
+                        <ul class="list-inline mb-0">
+                            @*  <li><a data-action="collapse"><i class="ft-minus"></i></a></li>*@
+                            <li><a data-action="reload" href="/Admin/Contacts"><i class="ft-rotate-cw"></i></a></li>
+                            @*<li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                                <li><a data-action="close"><i class="ft-x"></i></a></li>*@
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-content collapse show">
+                    <div class="card-body">
+                        <p>Для того чтобы изменить товары на сайте заполните поле ниже и нажмите <code>добавить товар</code>. Или редактируйте товар <code>редактировать</code></p>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col">Название</th>
+                                    <th scope="col">Цена</th>
+                                    <th scope="col">Описание</th>
+                                    <th scope="col">Изображение</th>
+                                    <th scope="col">Категория</th>
+                                    <th scope="col">Действие</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @using (Html.BeginForm("Products", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                {
+                                    <tr>
+                                        <td><input type="text" name="name" class="form-control" value="" /></td>
+                                        <td><input type="text" name="price" class="form-control" value="" /></td>
+                                        <td><textarea type="text" name="about" class="form-control"></textarea></td>
+                                        <td><input type="file" name="file" class="btn mb-1 btn-primary btn-lg btn-block" /></td>
+                                        <td>
+                                            <select class="custom-select" id="categori">
+                                                @for (int i = 0; i < Model.Categories.Count; i++)
+                                                {
+                                                    if (i == 0)
+                                                    {
+                                                        <option selected="">@Model.Categories[i].Name</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@Model.Categories[i].Name">@Model.Categories[i].Name</option>
+                                                    }
+                                                }
+                                            </select>
+
+                                        </td>
+                                        <td><button type="submit" class="btn btn-icon btn-success mr-1"><i class="ft-check"></i></button></td>
+                                    </tr>
+                                }
+                                @for (int i = 0; i < Model.Products.Count; i++)
+                                {
+                                    @using (Html.BeginForm("EditProducts", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                    {
+                                        <tr>
+                                            <td><input type="text" name="name" class="form-control" value="@Model.Products[i].Name" /></td>
+                                            <td><input type="text" name="price" class="form-control" value="@Model.Products[i].Price" /></td>
+                                            <td><textarea type="text" name="about" class="form-control">@Model.Products[i].Description</textarea></td>
+                                            <td><img width="100" height="100" src="~/images/@Model.Products[i].Image" /></td>
+                                            <td>
+                                                <select class="custom-select" id="categori">
+                                                    @for (int j = 0; j < Model.Categories.Count; j++)
+                                                    {
+                                                        if (Model.Categories[j].Name == Model.Products[i].Category.Name)
+                                                        {
+                                                            <option selected="">@Model.Categories[j].Name</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@Model.Categories[j].Name">@Model.Categories[j].Name</option>
+                                                        }
+                                                    }
+                                                </select>
+
+                                            </td>
+                                            <td><button type="submit" class="btn btn-icon btn-warning mr-1"><i class="ft-edit"></i></button>
+                                                <button type="submit" class="btn btn-icon btn-danger mr-1"><i class="ft-delete"></i></button>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
