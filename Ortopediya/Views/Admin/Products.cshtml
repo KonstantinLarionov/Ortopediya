@@ -10,9 +10,15 @@
                     <div class="heading-elements">
                         <ul class="list-inline mb-0">
                             @*  <li><a data-action="collapse"><i class="ft-minus"></i></a></li>*@
-                            <li><a data-action="reload" href="/Admin/Contacts"><i class="ft-rotate-cw"></i></a></li>
+                            <select class="custom-select" id="categori">
+                                @for (int j = 0; j < Model.Categories.Count; j++)
+                                {
+                                    <option href="@Model.Categories[j].Name" value="@Model.Categories[j].Name">@Model.Categories[j].Name</option>
+                                }
+                            </select>
+                            @*<li><a data-action="reload" href="/Admin/Contacts"><i class="ft-rotate-cw"></i></a></li>*@
                             @*<li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-                                <li><a data-action="close"><i class="ft-x"></i></a></li>*@
+        <li><a data-action="close"><i class="ft-x"></i></a></li>*@
                         </ul>
                     </div>
                 </div>
@@ -41,7 +47,7 @@
                                         <td><textarea type="text" name="about" class="form-control"></textarea></td>
                                         <td><input type="file" name="file" class="btn mb-1 btn-primary btn-lg btn-block" /></td>
                                         <td>
-                                            <select class="custom-select" id="categori">
+                                            <select class="custom-select" id="categori" name="categori">
                                                 @for (int i = 0; i < Model.Categories.Count; i++)
                                                 {
                                                     if (i == 0)

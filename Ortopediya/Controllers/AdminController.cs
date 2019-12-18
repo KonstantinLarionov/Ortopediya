@@ -72,19 +72,38 @@ namespace Ortopediya.Controllers
                 return View("Login");
             }
         }
+
+        public IActionResult Requests(string type)
+        {
+            List<Models.Objects.Request> reqs = new List<Models.Objects.Request>();
+            if (type == "" || type == null)
+            {
+                reqs = db.Requests.ToList();
+            }
+            else
+            {
+                reqs = db.Requests.Where(t => t.Theme == type).ToList();
+            }
+            if (reqs != null)
+            {
+                reqs.OrderByDescending(i => i.Id);
+            }
+            return View("Requests", reqs);
+        }
         public IActionResult Contacts()
         {
-           
+
             if (Auth())
             {
                 Models.Objects.Contact contacts = GetContact();
                 return View("Contacts", contacts);
             }
-            else 
+            else
             {
                 return View("Login");
             }
         }
+
         public IActionResult Baners()
         {
             if (Auth())
@@ -110,15 +129,21 @@ namespace Ortopediya.Controllers
                 return View("Login");
             }
         }
-        public IActionResult Products()
-        {
-            Models.PageObjects.MarketModel marketModel = new Models.PageObjects.MarketModel();
-            marketModel.Categories = db.Categories.ToList();
-            marketModel.Products = db.Products.ToList();
+        //public IActionResult Products()
+        //{
+        //    Models.PageObjects.MarketModel marketModel = new Models.PageObjects.MarketModel();
+        //    marketModel.Categories = db.Categories.ToList();
+        //    marketModel.Products = db.Products.ToList();
 
+        //    return View("Products", marketModel);
+        //}
+        public IActionResult Products(string category)
+        {
+            Models.PageObjects.MarketModel marketModel = GetProducts(category);
             return View("Products", marketModel);
         }
-        public IActionResult Products(string category)
+
+        private Models.PageObjects.MarketModel GetProducts(string category)
         {
             Models.PageObjects.MarketModel marketModel = new Models.PageObjects.MarketModel();
             marketModel.Categories = db.Categories.ToList();
@@ -130,11 +155,94 @@ namespace Ortopediya.Controllers
             {
                 marketModel.Products = db.Products.ToList();
             }
-            return View("Products", marketModel);
+
+            return marketModel;
         }
 
+        public IActionResult Partners()
+        {
+            if (Auth())
+            {
+                var partners = db.Partners.ToList();
+                return View("Partners", partners);
+            }
+            else
+            {
+                return View("Login");
+            }
+        }
 
         #region REST CONTROL
+        [HttpPost]
+        public IActionResult Products(string name, double price, string about, IFormFile file, string categori)
+        {
+            if (Auth())
+            {
+                if (file != null && file.Length != 0)
+                {
+                    var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/products", file.FileName);
+                    using (var stream = new FileStream(path, FileMode.Create))
+                    {
+                        file.CopyTo(stream);
+                    }
+                }
+                var ca = db.Categories.Where(o => o.Name == categori).FirstOrDefault();
+                db.Products.Add(new Models.Objects.Product()
+                {
+                    Name = name,
+                    Category = ca,
+                    Description = about,
+                    Image = file.FileName,
+                    Price = price
+                });
+                db.SaveChanges();
+                Models.PageObjects.MarketModel marketModel = GetProducts("");
+                return View("");
+
+            }
+            else
+            {
+                return View("Login");
+            }
+            
+        }
+        [HttpPost]
+        public IActionResult Partners(string code, string login, string password, double balance)
+        {
+            if (Auth())
+            {
+                db.Partners.Add(new Models.Objects.Partner()
+                {
+                    Balance = balance,
+                    Code = code,
+                    Login = login,
+                    Password = password
+                });
+                db.SaveChanges();
+                var partners = db.Partners.ToList();
+                return View("Partners", partners);
+            }
+            else 
+            {
+                return View("Login");
+            }
+        }
+        [HttpPost]
+        public IActionResult DeletePartners(string code, string login, string password, double balance)
+        {
+            if (Auth())
+            {
+                var partd = db.Partners.Where(o=>o.Code == code&& o.Login == login && o.Password == password && o.Balance == balance).FirstOrDefault();
+                db.Partners.Remove(partd);
+                db.SaveChanges();
+                var partners = db.Partners.ToList();
+                return View("Partners", partners);
+            }
+            else
+            {
+                return View("Login");
+            }
+        }
         [HttpPost]
         public IActionResult Categories(string name, string url)
         {

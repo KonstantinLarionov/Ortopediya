@@ -1,5 +1,30 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@model Ortopediya.Models.PageObjects.AboutModel
+@section Index{
+    <link rel="stylesheet" type="text/css" href="~/styles/main_styles.css">
+    <link rel="stylesheet" type="text/css" href="~/styles/responsive.css">
 }
+<div class="super_container">
+    <div class="newsletter">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="newsletter_border"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 offset-lg-2">
+                    <div class="newsletter_content text-center">
+                        <div class="newsletter_title">Основная информация магазина Ортопедия</div>
+                        <div class="newsletter_text"><p>@Model.Abouts.Text</p></div>
+                        <div class="newsletter_form_container">
+                            <form action="/Home/Subscribe" id="newsletter_form" method="post" class="newsletter_form">
+                                <input name="email" type="email" class="newsletter_input" required="required">
+                                <button class="newsletter_button trans_200"><span>Подписаться</span></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

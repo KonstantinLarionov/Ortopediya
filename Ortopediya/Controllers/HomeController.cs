@@ -96,6 +96,34 @@ namespace Ortopediya.Controllers
             var partner = GetModelPartner();
             return View("Partner", partner);
         }
+
+        public IActionResult About()
+        {
+            var about = db.Abouts.ToList();
+            Models.Objects.About a = new Models.Objects.About();
+            if (about.Count == 0)
+            {
+                about = new List<Models.Objects.About>();
+            }
+            else 
+            {
+                a = about.OrderByDescending(o=>o.Id).FirstOrDefault();
+            }
+            var cont = db.Contacts.ToList();
+            Models.Objects.Contact c = new Models.Objects.Contact();
+            if (cont.Count != 0)
+            {
+                c =  cont.OrderByDescending(c=>c.Id).First();
+            }
+            var aboutModel = new AboutModel()
+            {
+                Abouts = a,
+                Categories = db.Categories.ToList(),
+                Contacts = c
+            };
+            return View("About", aboutModel);
+        }
+
         [HttpGet]
         public ActionResult BalancePartner(string code)
         {

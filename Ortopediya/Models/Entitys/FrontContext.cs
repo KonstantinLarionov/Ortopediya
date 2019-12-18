@@ -23,6 +23,7 @@ namespace Ortopediya.Models.Entitys
         public DbSet<Rules> Rules { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<IP> IPs { get; set; }
+        public DbSet<Admin> Admins { get; set; }
         public FrontContext(DbContextOptions options) : base(options)
         {
             Database.EnsureCreated();
