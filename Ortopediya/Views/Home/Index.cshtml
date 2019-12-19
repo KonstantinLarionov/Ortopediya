@@ -22,7 +22,6 @@
             {
                 if (i == 0)
                 {
-
                     <div class="owl-item home_slider_item">
                         <div class="home_slider_background" style="background-image:url(/images/@Model.Baners[i].URL)"></div>
                         <div class="home_slider_content_container">
@@ -32,7 +31,7 @@
                                         <div class="home_slider_content" data-animation-in="fadeIn" data-animation-out="animate-out fadeOut">
                                             <div class="home_slider_title">Приветствуем вас в наше магазине.</div>
                                             <div class="home_slider_subtitle">В нашем магазине в найдете все самые нужные товары, для комфортного выздоровления так как мы сотрудничаем с врачами и абсолютно точно знаем что вам нужно.</div>
-                                            <div class="button button_light home_button"><a href="#">Посмотреть товары</a></div>
+                                            <div class="button button_light home_button"><a href="/Home/Market">Посмотреть товары</a></div>
                                         </div>
                                     </div>
                                 </div>
@@ -93,7 +92,7 @@
                 <div class="avds_large_content">
                     <div class="avds_title">Принимаем</div>
                     <div class="avds_text">Вы сделаете доброе дело!<br>Если у вас остались костыли, коляски или другая ортопедия, и вам они уже ни к чему, приходите к нам, мы срадостью примем их, они 100% понадобятся другим.</div>
-                    <div class="avds_link avds_link_large"><a href="">Узнать условия</a></div>
+                    <div class="avds_link avds_link_large"><a href="/Home/About">Узнать условия</a></div>
                 </div>
             </div>
         </div>
@@ -103,7 +102,7 @@
                 <div class="avds_large_content">
                     <div class="avds_title">Продаем</div>
                     <div class="avds_text">Основная наша деятельность: ПРОДАЖА И АРЕНДА ортопедии, вы можете купить у нас по доступной цене все необходимое, или взять в аренду.</div>
-                    <div class="avds_link avds_link_large"><a href="">Посмотреть все</a></div>
+                    <div class="avds_link avds_link_large"><a href="/Home/Market">Посмотреть все</a></div>
                 </div>
             </div>
         </div>
@@ -121,10 +120,10 @@
                     @for (int i = 0; i < Model.Products.Count; i++)
                     {
                         <div class="product">
-                            <div class="product_image"><img src="@Model.Products[i].Image" alt=""></div>
+                            <div class="product_image"><img src="~/images/products/@Model.Products[i].Image[0].Name" alt=""></div>
                             <div class="product_extra product_new"><a href="">New</a></div>
                             <div class="product_content">
-                                <div class="product_title"><a href="product.html"> @Model.Products[i].Name</a></div>
+                                <div class="product_title"><a href="/Home/Product/?id=@Model.Products[i].Id"> @Model.Products[i].Name</a></div>
                                 <div class="product_price">@Model.Products[i].Price</div>
                             </div>
                         </div>

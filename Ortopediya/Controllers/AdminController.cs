@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Ortopediya.Models.Entitys;
+using Ortopediya.Models.Objects;
 
 namespace Ortopediya.Controllers
 {
@@ -147,13 +148,16 @@ namespace Ortopediya.Controllers
         {
             Models.PageObjects.MarketModel marketModel = new Models.PageObjects.MarketModel();
             marketModel.Categories = db.Categories.ToList();
-            try
+            if (category != "")
             {
                 marketModel.Products = db.Products.Where(p => p.Category.Name == category).ToList();
+                marketModel.Products.SelectMany(s => s.Image);
             }
-            catch
+            else
             {
                 marketModel.Products = db.Products.ToList();
+                marketModel.Products.SelectMany(s => s.Image);
+
             }
 
             return marketModel;
@@ -174,30 +178,38 @@ namespace Ortopediya.Controllers
 
         #region REST CONTROL
         [HttpPost]
-        public IActionResult Products(string name, double price, string about, IFormFile file, string categori)
+        public IActionResult Products(string name, double price, string about, List<IFormFile> file, string categori)
         {
             if (Auth())
             {
-                if (file != null && file.Length != 0)
+                List<Image> imgs = new List<Image>();
+
+                if (file != null && file.Count() != 0)
                 {
-                    var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/products", file.FileName);
-                    using (var stream = new FileStream(path, FileMode.Create))
+                    
+                    foreach (var file1 in file)
                     {
-                        file.CopyTo(stream);
+                        var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/products", file1.FileName);
+                        using (var stream = new FileStream(path, FileMode.Create))
+                        {
+                            file1.CopyTo(stream);
+                        }
+                        imgs.Add(new Image() { Name = file1.FileName });
                     }
                 }
                 var ca = db.Categories.Where(o => o.Name == categori).FirstOrDefault();
+
                 db.Products.Add(new Models.Objects.Product()
                 {
                     Name = name,
                     Category = ca,
                     Description = about,
-                    Image = file.FileName,
+                    Image = imgs,
                     Price = price
                 });
                 db.SaveChanges();
                 Models.PageObjects.MarketModel marketModel = GetProducts("");
-                return View("");
+                return View("Products",marketModel);
 
             }
             else
@@ -302,9 +314,9 @@ namespace Ortopediya.Controllers
             return View("Baners", baners);
         }
         [HttpPost]
-        public IActionResult Contacts(string EmailInfo, string EmailMarketing, string PhoneInfo, string PhoneMarketing, string VKLink, string OKLink, string FacebookLink, string InstagramLink)
+        public IActionResult Contacts(string EmailInfo, string EmailMarketing, string PhoneInfo, string PhoneMarketing, string VKLink, string OKLink, string FacebookLink, string InstagramLink, string Address)
         {
-            db.Contacts.Add(new Models.Objects.Contact() 
+            db.Contacts.Add(new Models.Objects.Contact()
             {
                 EmailInfo = EmailInfo,
                 EmailMarketing = EmailMarketing,
@@ -314,8 +326,9 @@ namespace Ortopediya.Controllers
                 OKLink = OKLink,
                 FacebookLink = FacebookLink,
                 InstagramLink = InstagramLink,
+                Address = Address,
                 LastDateEdit = DateTime.Now
-            });
+            }) ;
             db.SaveChanges();
 
             Models.Objects.Contact contacts = GetContact();

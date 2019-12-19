@@ -10,12 +10,12 @@
                     <div class="heading-elements">
                         <ul class="list-inline mb-0">
                             @*  <li><a data-action="collapse"><i class="ft-minus"></i></a></li>*@
-                            <select class="custom-select" id="categori">
+                            <select class="custom-select" id="categori" name="category">
                                 @for (int j = 0; j < Model.Categories.Count; j++)
                                 {
-                                    <option href="@Model.Categories[j].Name" value="@Model.Categories[j].Name">@Model.Categories[j].Name</option>
+                                <option value="@Model.Categories[j].Name">@Model.Categories[j].Name</option>
                                 }
-                            </select>
+                                </select>
                             @*<li><a data-action="reload" href="/Admin/Contacts"><i class="ft-rotate-cw"></i></a></li>*@
                             @*<li><a data-action="expand"><i class="ft-maximize"></i></a></li>
         <li><a data-action="close"><i class="ft-x"></i></a></li>*@
@@ -45,7 +45,10 @@
                                         <td><input type="text" name="name" class="form-control" value="" /></td>
                                         <td><input type="text" name="price" class="form-control" value="" /></td>
                                         <td><textarea type="text" name="about" class="form-control"></textarea></td>
-                                        <td><input type="file" name="file" class="btn mb-1 btn-primary btn-lg btn-block" /></td>
+                                        <td>
+                                            <input type="file" name="file" class="btn mb-1 btn-primary btn-lg btn-block" multiple />
+                                         
+                                        </td>
                                         <td>
                                             <select class="custom-select" id="categori" name="categori">
                                                 @for (int i = 0; i < Model.Categories.Count; i++)
@@ -73,7 +76,12 @@
                                             <td><input type="text" name="name" class="form-control" value="@Model.Products[i].Name" /></td>
                                             <td><input type="text" name="price" class="form-control" value="@Model.Products[i].Price" /></td>
                                             <td><textarea type="text" name="about" class="form-control">@Model.Products[i].Description</textarea></td>
-                                            <td><img width="100" height="100" src="~/images/@Model.Products[i].Image" /></td>
+                                            <td>
+                                                @for (int k = 0; k < @Model.Products[i].Image.Count; k++)
+                                                {
+                                                    <img width="20" height="20" src="~/images/products/@Model.Products[i].Image[k].Name"/>
+                                                }
+                                            </td>
                                             <td>
                                                 <select class="custom-select" id="categori">
                                                     @for (int j = 0; j < Model.Categories.Count; j++)
@@ -104,3 +112,11 @@
         </div>
     </div>
 </section>
+<script type="text/javascript">
+    $(function () {
+        $("#categori").change(function () {
+            alert();
+            window.location = window.location.href.split('?')[0] + "?category=" + this.value
+        });
+    });
+</script>

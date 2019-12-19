@@ -17,6 +17,8 @@ namespace Ortopediya.Models.Objects
         public string OKLink { get; set; } = "";
         public string FacebookLink { get; set; } = "";
         public string InstagramLink { get; set; } = "";
+        public string Address { get; set; } = "";
+
         public DateTime LastDateEdit { get; set; }
     }
 }

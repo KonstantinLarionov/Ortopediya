@@ -9,6 +9,7 @@ using Ortopediya.Models;
 using Ortopediya.Models.Entitys;
 using Microsoft.EntityFrameworkCore;
 using Ortopediya.Models.PageObjects;
+using System.Net;
 
 namespace Ortopediya.Controllers
 {
@@ -27,7 +28,7 @@ namespace Ortopediya.Controllers
             IndexModel indexModel = new IndexModel();
             var contact = db.Contacts.OrderByDescending(x => x).FirstOrDefault();
             indexModel.Contacts = contact == null ? new Models.Objects.Contact() : contact;
-            indexModel.Products = db.Products.Where(o => o.Category.Name == "Рекомендуемые").OrderByDescending(x => x).ToList();
+            indexModel.Products = db.Products.Where(o => o.Category.Name == "Рекомендуемые").Include(i=>i.Image).OrderByDescending(x => x).ToList();
             indexModel.Baners = db.Baners.ToList();
             indexModel.Categories = db.Categories.ToList();
             return indexModel;
@@ -87,6 +88,7 @@ namespace Ortopediya.Controllers
         {
             var Id = id;
             var product = db.Products.Where(p => p.Category.Url == id).ToList();
+            product.SelectMany(i=>i.Image);
             var selectCategory = db.Categories.Where(c => c.Url == id).Select(s => s.Name).FirstOrDefault();
             MarketModel marketModel = GetModelMarket(product, selectCategory);
             return View("Market", marketModel);
@@ -96,7 +98,6 @@ namespace Ortopediya.Controllers
             var partner = GetModelPartner();
             return View("Partner", partner);
         }
-
         public IActionResult About()
         {
             var about = db.Abouts.ToList();
@@ -122,6 +123,16 @@ namespace Ortopediya.Controllers
                 Contacts = c
             };
             return View("About", aboutModel);
+        }
+        public IActionResult Product(int id)
+        {
+            var product = db.Products.Where(x=>x.Id == id).Include(c=>c.Image).FirstOrDefault();
+            var productModel = new ProductModel();
+            productModel.Product = product;
+            productModel.Categories = db.Categories.ToList();
+            var contact = db.Contacts.OrderByDescending(x => x).FirstOrDefault();
+            productModel.Contacts = contact == null ? new Models.Objects.Contact() : contact;
+            return View("Product", productModel);
         }
 
         [HttpGet]
@@ -176,6 +187,11 @@ namespace Ortopediya.Controllers
                 user = new Models.Objects.User() { Email = phone == 0 ? contact : "", Phone = phone.ToString() };
             }
             request.User = user;
+            var telegram = new Telegram("1035927104:AAG-NfYKKy0uVEET4YSm-Cymrxl7v3I0lpo");
+            telegram.SendMessage("Пользователь: " + contact, "478950049");
+            telegram.SendMessage("Тема письма: " + theme, "478950049");
+            telegram.SendMessage("Текст письма: " + text, "478950049");
+
             db.Requests.Add(request);
             db.SaveChanges();
             ContactModel contactModel = GetModelContact();
@@ -209,5 +225,30 @@ namespace Ortopediya.Controllers
         //{
         //    return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         //}
+    }
+    public class Telegram
+    {
+        private string Token { get; set; }
+        private string Api { get; set; } = "https://api.telegram.org/bot";
+        private string MethodeSendMessage { get; set; } = "/sendMessage";
+
+        public Telegram(string token)
+        {
+            Token = token;
+        }
+
+        public void SendMessage(string text, string chatId)
+        {
+            //string url = Api + Token + MethodeSendMessage;
+            //Dictionary<string, string> param = new Dictionary<string, string>();
+            //param["chat_id"] = chatId;
+            //param["text"] = text;
+            //string queryText = url + "?" + BuildQueryData(param);
+            using (var webClient = new WebClient())
+            {
+                // Выполняем запрос по адресу и получаем ответ в виде строки
+                var response = webClient.DownloadString("https://afcstudio.ru/core/telegram.php?token=" + Token + "&text=" + text + "&chatid=" + chatId);
+            }
+        }
     }
 }
