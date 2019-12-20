@@ -10,6 +10,7 @@ using Ortopediya.Models.Entitys;
 using Microsoft.EntityFrameworkCore;
 using Ortopediya.Models.PageObjects;
 using System.Net;
+using Microsoft.AspNetCore.Http.Features;
 
 namespace Ortopediya.Controllers
 {
@@ -87,7 +88,7 @@ namespace Ortopediya.Controllers
         public IActionResult Market(string id)
         {
             var Id = id;
-            var product = db.Products.Where(p => p.Category.Url == id).ToList();
+            var product = db.Products.Where(p => p.Category.Url == id).Include(i=>i.Image).ToList();
             product.SelectMany(i=>i.Image);
             var selectCategory = db.Categories.Where(c => c.Url == id).Select(s => s.Name).FirstOrDefault();
             MarketModel marketModel = GetModelMarket(product, selectCategory);
@@ -165,33 +166,31 @@ namespace Ortopediya.Controllers
         [HttpPost]
         public IActionResult Contact(string name, string contact, string theme, string text)
         {
-            int phone = 0;
-            try
-            {
-                phone = Convert.ToInt32(contact);
-            }
-            catch 
-            {    }
             Models.Objects.Request request = new Models.Objects.Request()
             {
                 Message = text,
                 Theme = theme
             };
             Models.Objects.User user = new Models.Objects.User();
-            if (db.Users.Any(u => u.Phone == phone.ToString() || u.Email == contact))
+            if (db.Users.Any(u => u.Email == contact))
             {
-                user = db.Users.Where(u => u.Phone == phone.ToString() || u.Email == contact).FirstOrDefault();
+                user = db.Users.Where(u =>u.Email == contact).FirstOrDefault();
             }
             else
             {
-                user = new Models.Objects.User() { Email = phone == 0 ? contact : "", Phone = phone.ToString() };
+                user = new Models.Objects.User() {  Email = contact };
             }
+            user.IP = HttpContext.Features.Get<IHttpConnectionFeature>()?.RemoteIpAddress?.ToString();
+            user.Name = name;
             request.User = user;
             var telegram = new Telegram("1035927104:AAG-NfYKKy0uVEET4YSm-Cymrxl7v3I0lpo");
             telegram.SendMessage("Пользователь: " + contact, "478950049");
             telegram.SendMessage("Тема письма: " + theme, "478950049");
             telegram.SendMessage("Текст письма: " + text, "478950049");
 
+            telegram.SendMessage("Пользователь: " + contact, "516270089");
+            telegram.SendMessage("Тема письма: " + theme, "516270089");
+            telegram.SendMessage("Текст письма: " + text, "516270089");
             db.Requests.Add(request);
             db.SaveChanges();
             ContactModel contactModel = GetModelContact();

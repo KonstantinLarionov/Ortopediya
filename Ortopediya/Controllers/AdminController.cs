@@ -79,16 +79,17 @@ namespace Ortopediya.Controllers
             List<Models.Objects.Request> reqs = new List<Models.Objects.Request>();
             if (type == "" || type == null)
             {
-                reqs = db.Requests.ToList();
+                reqs = db.Requests.Include(i=>i.User).ToList();
             }
             else
             {
-                reqs = db.Requests.Where(t => t.Theme == type).ToList();
+                reqs = db.Requests.Where(t => t.Theme == type).Include(i => i.User).ToList();
             }
             if (reqs != null)
             {
                 reqs.OrderByDescending(i => i.Id);
             }
+            
             return View("Requests", reqs);
         }
         public IActionResult Contacts()
@@ -131,7 +132,7 @@ namespace Ortopediya.Controllers
             }
         }
         //public IActionResult Products()
-        //{
+        //{516270089
         //    Models.PageObjects.MarketModel marketModel = new Models.PageObjects.MarketModel();
         //    marketModel.Categories = db.Categories.ToList();
         //    marketModel.Products = db.Products.ToList();
@@ -148,15 +149,15 @@ namespace Ortopediya.Controllers
         {
             Models.PageObjects.MarketModel marketModel = new Models.PageObjects.MarketModel();
             marketModel.Categories = db.Categories.ToList();
-            if (category != "")
+            if (category != "" && category != null)
             {
-                marketModel.Products = db.Products.Where(p => p.Category.Name == category).ToList();
-                marketModel.Products.SelectMany(s => s.Image);
+                marketModel.Products = db.Products.Where(p => p.Category.Name == category).Include(a=>a.Image).ToList();
+                
             }
             else
             {
-                marketModel.Products = db.Products.ToList();
-                marketModel.Products.SelectMany(s => s.Image);
+                marketModel.Products = db.Products.Include(a => a.Image).ToList();
+                
 
             }
 
