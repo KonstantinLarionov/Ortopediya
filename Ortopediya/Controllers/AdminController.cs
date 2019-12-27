@@ -176,6 +176,10 @@ namespace Ortopediya.Controllers
                 return View("Login");
             }
         }
+        public IActionResult Login()
+        {
+            return View("Login");
+        }
 
         #region REST CONTROL
         [HttpPost]
@@ -187,7 +191,6 @@ namespace Ortopediya.Controllers
 
                 if (file != null && file.Count() != 0)
                 {
-                    
                     foreach (var file1 in file)
                     {
                         var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/products", file1.FileName);
@@ -210,7 +213,7 @@ namespace Ortopediya.Controllers
                 });
                 db.SaveChanges();
                 Models.PageObjects.MarketModel marketModel = GetProducts("");
-                return View("Products",marketModel);
+                return View("Products", marketModel);
 
             }
             else
@@ -250,6 +253,36 @@ namespace Ortopediya.Controllers
                 db.SaveChanges();
                 var partners = db.Partners.ToList();
                 return View("Partners", partners);
+            }
+            else
+            {
+                return View("Login");
+            }
+        }
+        [HttpPost]
+        public IActionResult EditProducts(string Id, string name, string about, string price, string categori, string action)
+        {
+            if (Auth())
+            {
+                if (action == "delete")
+                {
+                    var partd = db.Products.Include(f => f.Image).Where(o => o.Id == Convert.ToInt32(Id)).FirstOrDefault();
+                    if (System.IO.File.Exists("wwwroot/images/products/" + partd.Name)) System.IO.File.Delete("wwwroot/images/products/" + partd.Name);
+                    db.Products.Remove(partd);
+                    db.SaveChanges();
+                }
+                else if (action == "edit")
+                {
+                    var partd = db.Products.Where(o => o.Id == Convert.ToInt32(Id)).FirstOrDefault();
+                    var ca = db.Categories.Where(o => o.Name == categori).FirstOrDefault();
+                    partd.Price = Convert.ToDouble(price.Replace('.', ','));
+                    partd.Name = name;
+                    partd.Description = about;
+                    partd.Category = ca;
+                    db.SaveChanges();
+                }
+                Models.PageObjects.MarketModel marketModel = GetProducts("");
+                return View("Products", marketModel);
             }
             else
             {

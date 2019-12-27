@@ -47,7 +47,6 @@
                                         <td><textarea type="text" name="about" class="form-control"></textarea></td>
                                         <td>
                                             <input type="file" name="file" class="btn mb-1 btn-primary btn-lg btn-block" multiple />
-                                         
                                         </td>
                                         <td>
                                             <select class="custom-select" id="categori" name="categori">
@@ -73,7 +72,10 @@
                                     @using (Html.BeginForm("EditProducts", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
                                     {
                                         <tr>
-                                            <td><input type="text" name="name" class="form-control" value="@Model.Products[i].Name" /></td>
+                                            <td>
+                                            <input type="hidden" name="Id" value="@Model.Products[i].Id"/>     
+                                            <input type="text" name="name" class="form-control" value="@Model.Products[i].Name" />
+                                            </td>
                                             <td><input type="text" name="price" class="form-control" value="@Model.Products[i].Price" /></td>
                                             <td><textarea type="text" name="about" class="form-control">@Model.Products[i].Description</textarea></td>
                                             <td>
@@ -83,7 +85,7 @@
                                                 }
                                             </td>
                                             <td>
-                                                <select class="custom-select" id="categori">
+                                                <select class="custom-select" id="categori" name="categori">
                                                     @for (int j = 0; j < Model.Categories.Count; j++)
                                                     {
                                                         if (Model.Categories[j].Name == Model.Products[i].Category.Name)
@@ -98,8 +100,9 @@
                                                 </select>
 
                                             </td>
-                                            <td><button type="submit" class="btn btn-icon btn-warning mr-1"><i class="ft-edit"></i></button>
-                                                <button type="submit" class="btn btn-icon btn-danger mr-1"><i class="ft-delete"></i></button>
+                                            <td>
+                                                <button name="action" value="edit" type="submit" class="btn btn-icon btn-warning mr-1"><i class="ft-edit"></i></button>
+                                                <button name="action" value="delete" type="submit" class="btn btn-icon btn-danger mr-1"><i class="ft-delete"></i></button>
                                             </td>
                                         </tr>
                                     }
