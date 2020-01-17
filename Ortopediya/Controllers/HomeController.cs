@@ -29,7 +29,7 @@ namespace Ortopediya.Controllers
             IndexModel indexModel = new IndexModel();
             var contact = db.Contacts.OrderByDescending(x => x).FirstOrDefault();
             indexModel.Contacts = contact == null ? new Models.Objects.Contact() : contact;
-            indexModel.Products = db.Products.Where(o => o.Category.Name == "Рекомендуемые").Include(i=>i.Image).OrderByDescending(x => x).ToList();
+            indexModel.Products = db.Products/*.Where(o => o.Category.Name == "Рекомендуемые")*/.Include(i=>i.Image).OrderByDescending(x => x).ToList();
             indexModel.Baners = db.Baners.ToList();
             indexModel.Categories = db.Categories.ToList();
             return indexModel;
