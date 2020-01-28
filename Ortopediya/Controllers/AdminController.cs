@@ -131,14 +131,7 @@ namespace Ortopediya.Controllers
                 return View("Login");
             }
         }
-        //public IActionResult Products()
-        //{516270089
-        //    Models.PageObjects.MarketModel marketModel = new Models.PageObjects.MarketModel();
-        //    marketModel.Categories = db.Categories.ToList();
-        //    marketModel.Products = db.Products.ToList();
 
-        //    return View("Products", marketModel);
-        //}
         public IActionResult Products(string category)
         {
             Models.PageObjects.MarketModel marketModel = GetProducts(category);
@@ -151,19 +144,15 @@ namespace Ortopediya.Controllers
             marketModel.Categories = db.Categories.ToList();
             if (category != "" && category != null)
             {
-                marketModel.Products = db.Products.Where(p => p.Category.Name == category).Include(a=>a.Image).ToList();
-                
+                marketModel.Products = db.Products.Where(p => p.Category.Name == category).Include(a=>a.Image).ToList(); 
             }
             else
             {
                 marketModel.Products = db.Products.Include(a => a.Image).ToList();
-                
-
             }
 
             return marketModel;
         }
-
         public IActionResult Partners()
         {
             if (Auth())
@@ -183,22 +172,22 @@ namespace Ortopediya.Controllers
 
         #region REST CONTROL
         [HttpPost]
-        public IActionResult Products(string name, double price, string about, List<IFormFile> file, string categori)
+        public IActionResult Products(string name, double price, string about, List<IFormFile> images, string categori)
         {
             if (Auth())
             {
                 List<Image> imgs = new List<Image>();
 
-                if (file != null && file.Count() != 0)
+                if (images != null && images.Count() != 0)
                 {
-                    foreach (var file1 in file)
+                    foreach (var file in images)
                     {
-                        var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/products", file1.FileName);
+                        var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/products", file.FileName);
                         using (var stream = new FileStream(path, FileMode.Create))
                         {
-                            file1.CopyTo(stream);
+                            file.CopyTo(stream);
                         }
-                        imgs.Add(new Image() { Name = file1.FileName });
+                        imgs.Add(new Image() { Name = file.FileName });
                     }
                 }
                 var ca = db.Categories.Where(o => o.Name == categori).FirstOrDefault();
@@ -214,7 +203,6 @@ namespace Ortopediya.Controllers
                 db.SaveChanges();
                 Models.PageObjects.MarketModel marketModel = GetProducts("");
                 return View("Products", marketModel);
-
             }
             else
             {
